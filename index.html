@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Home Equity Sharing Illustration</title>
+<style>
+:root{--ink:#17202b;--muted:#5b6675;--line:#e3e7ec;--field:#cfd5dc;--bg:#f4f5f7;--card:#fff;--acc:#0f766e;--acc2:#e8f4f1;--inv:#9aa6b6;--warn:#9a3412;--warnbg:#fff4ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+h1{font-size:24px;margin:0;letter-spacing:-.01em}
+h2{font-size:15px;margin:0 0 12px}
+h2 small{font-weight:400;color:var(--muted)}
+#forLine{margin:4px 0 0;color:var(--muted)}
+button{font:inherit;font-weight:600;padding:9px 16px;border-radius:8px;border:0;background:var(--ink);color:#fff;cursor:pointer}
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:16px;display:grid;gap:14px}
+label,.lbl{display:grid;gap:5px;font-size:13px;font-weight:600;color:var(--muted)}
+label small{font-weight:400}
+input[type=text],input[type=number]{font:inherit;color:var(--ink);padding:8px 10px;border:1px solid var(--field);border-radius:8px;width:100%;background:#fff}
+input:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+input[type=range]{width:100%;margin:0;accent-color:var(--acc)}
+.hint{margin:-6px 0 0;font-size:12.5px;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex}
+.seg label{position:relative;flex:1;display:block;text-align:center;padding:8px;border:1px solid var(--field);color:var(--ink);font-weight:500;cursor:pointer}
+.seg label:first-child{border-radius:8px 0 0 8px;border-right:0}
+.seg label:last-child{border-radius:0 8px 8px 0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(:checked){background:var(--acc);border-color:var(--acc);color:#fff}
+.seg label:has(:focus-visible){outline:2px solid var(--acc);outline-offset:2px}
+details{border-top:1px solid var(--line);padding-top:12px}
+details>label{margin-top:10px}
+summary{cursor:pointer;font-size:13px;font-weight:600}
+main{display:grid;gap:16px}
+.warn{background:var(--warnbg);border:1px solid #f1cdb3;color:var(--warn);border-radius:12px;padding:12px 16px;font-size:14px}
+.warn ul{margin:4px 0 0;padding-left:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi,.card,.story{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.kpi{padding:14px}
+.kpi span,.kpi small{display:block;font-size:12.5px;color:var(--muted)}
+.kpi b{display:block;font-size:22px;margin:3px 0 1px;letter-spacing:-.01em}
+.kpi.hl{background:var(--acc2);border-color:#c5e3dc}
+.story{margin:0;padding:16px 18px;line-height:1.6}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{padding:18px;min-width:0}
+dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:8px 0;font-size:14px}
+dt{color:var(--muted)}
+dd{margin:0;padding-left:12px;text-align:right;font-weight:500}
+dt small{display:block;font-size:12px;font-weight:400}
+.tot{border-top:1px solid var(--line);padding-top:8px;color:var(--ink);font-weight:700}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:12.5px;color:var(--muted);font-weight:600;vertical-align:bottom;white-space:normal}
+tbody tr:last-child td{border-bottom:0}
+tr.sel td{background:var(--acc2);font-weight:600}
+tr.em td{font-weight:700;color:var(--ink)}
+th:has(.sr){white-space:nowrap}
+th input[type=number]{width:74px;padding:4px 6px;text-align:right;font-weight:600}
+td.b{width:20%;min-width:110px}
+.bar{display:flex;height:10px;border-radius:5px;overflow:hidden}
+.bar i{background:var(--acc)}
+.bar b{background:var(--inv)}
+.key{font-size:12.5px;color:var(--muted);margin:-4px 0 8px}
+.key i,.key b{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.key i{background:var(--acc)}
+.key b{background:var(--inv);margin-left:14px}
+.foot{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.foot:empty{display:none}
+.notes{font-size:12.5px;color:var(--muted)}
+.notes ul{margin:6px 0 0;padding-left:18px}
+.notes li{margin-bottom:3px}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.panel{position:static}}
+@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.kpi b{font-size:19px}}
+@media print{
+  @page{margin:12mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;font-size:12px}
+  .wrap{padding:0;max-width:none}
+  .panel,.no-print{display:none!important}
+  .layout{display:block}
+  main{gap:10px}
+  .kpi,.card,.story,.warn,.notes{break-inside:avoid}
+  th input[type=number]{border:0;padding:0;width:40px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>Home Equity Sharing Illustration</h1><p id="forLine"></p></div>
+    <button class="no-print" type="button" onclick="print()">Print / Save PDF</button>
+  </header>
+
+  <div class="layout">
+    <form class="panel" onsubmit="return false">
+      <label>Prepared for<input id="client" type="text" placeholder="Client name (optional)" autocomplete="off"></label>
+      <label>Appraised home value<input id="ahv" class="money" type="text" inputmode="numeric" value="1000000"></label>
+      <label>Existing mortgage &amp; secured debt <small>incl. HELOC limits</small><input id="debt" class="money" type="text" inputmode="numeric" value="0"></label>
+      <label>Initial payment<input id="pay" class="money" type="text" inputmode="numeric" value="100000"></label>
+      <input id="paySlider" type="range" step="any" aria-label="Initial payment slider">
+      <p class="hint" id="payHint"></p>
+      <label><span>Years until exit: <output id="yearsOut"></output></span><input id="years" type="range" min="1" max="10" value="10"></label>
+      <div class="pair">
+        <label>Value change / yr (%)<input id="rate" type="number" step="0.25" value="2"></label>
+        <label>Home value at exit<input id="exitValue" class="money" type="text" inputmode="numeric"></label>
+      </div>
+      <div class="lbl">Exit by<div class="seg">
+        <label><input type="radio" name="exit" value="sale" checked>Sale</label>
+        <label><input type="radio" name="exit" value="buyout">Buyout</label>
+      </div></div>
+      <details><summary>Closing costs</summary>
+        <label>Transaction fee (% of payment)<input id="txnFee" type="number" step="0.1" value="3.9"></label>
+        <label>Broker fee<input id="broker" class="money" type="text" inputmode="numeric" value="2500"></label>
+        <label>Legal &amp; title<input id="legal" class="money" type="text" inputmode="numeric" value="2599"></label>
+        <label>Appraisal<input id="appraisal" class="money" type="text" inputmode="numeric" value="800"></label>
+      </details>
+      <details><summary>Program terms</summary>
+        <label>Gain share multiple (× investment %)<input id="multiple" type="number" step="0.1" value="4"></label>
+        <label>Risk adjustment (%)<input id="riskAdj" type="number" step="0.5" value="5"></label>
+      </details>
+    </form>
+
+    <main>
+      <div class="warn" id="warn" hidden></div>
+      <div class="kpis">
+        <div class="kpi hl"><span>Cash to you today</span><b id="k1"></b><small id="k1s"></small></div>
+        <div class="kpi"><span>You repay at exit</span><b id="k2"></b><small id="k2s"></small></div>
+        <div class="kpi"><span>You keep</span><b id="k3"></b><small id="k3s"></small></div>
+        <div class="kpi"><span>Annual cost incl. fees</span><b id="k4"></b><small id="k4s"></small></div>
+      </div>
+      <p class="story" id="story"></p>
+      <div class="cards">
+        <section class="card"><h2>Today</h2><dl id="today"></dl></section>
+        <section class="card"><h2 id="exitTitle"></h2><dl id="atExit"></dl></section>
+      </div>
+      <section class="card">
+        <h2>Market scenarios <small id="scenSub"></small></h2>
+        <div class="scroll"><table>
+          <thead><tr><th>Home value change / yr</th>
+            <th><input class="sr" type="number" step="0.5" value="-2" aria-label="Scenario 1 rate">%</th>
+            <th><input class="sr" type="number" step="0.5" value="0" aria-label="Scenario 2 rate">%</th>
+            <th><input class="sr" type="number" step="0.5" value="3" aria-label="Scenario 3 rate">%</th>
+            <th><input class="sr" type="number" step="0.5" value="6" aria-label="Scenario 4 rate">%</th>
+          </tr></thead>
+          <tbody id="scen"></tbody>
+        </table></div>
+        <p class="foot" id="scenFoot"></p>
+      </section>
+      <section class="card">
+        <h2>If you exit in year… <small id="yearSub"></small></h2>
+        <p class="key"><i></i>You keep<b></b>You repay</p>
+        <div class="scroll"><table>
+          <thead><tr><th>Year</th><th>Home value</th><th>Investor share</th><th>You repay</th><th>You keep</th><th>Annual cost incl. fees</th><th></th></tr></thead>
+          <tbody id="yearly"></tbody>
+        </table></div>
+        <p class="foot" id="yearFoot"></p>
+      </section>
+      <section class="notes" id="notes"></section>
+    </main>
+  </div>
+</div>
+
+<script src="calc.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const cad = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', currencySign: 'accounting', maximumFractionDigits: 0 });
+const money = (n) => (isFinite(n) ? cad.format(Math.round(n) || 0) : '—');
+const pct = (n) => (isFinite(n) ? +(n * 100).toFixed(2) + '%' : '—');
+const pct2 = (n) => (isFinite(n) ? (n * 100).toFixed(2) + '%' : '—');
+const val = (id) => +$(id).value.replace(/[^\d.]/g, '') || 0;
+const clamp = (n) => Math.max(0, Math.min(100, n * 100));
+const dl = (rows) => rows.map(([k, v, c = '', note = '']) => `<dt class="${c}">${k}${note && `<small>${note}</small>`}</dt><dd class="${c}">${v}</dd>`).join('');
+const today = new Date().toLocaleDateString('en-CA', { dateStyle: 'long' });
+const FLOOR_NOTE = '* Value floored at the appraised value: the investor does not share a loss on a buyout or on a sale within the first 3 years.';
+let mode = 'rate'; // whichever of rate / exit value was typed last; the other is derived from it
+
+function render() {
+  const ahv = val('ahv'), debt = val('debt'), pay = val('pay'), years = +$('years').value;
+  const buyout = document.querySelector('[name=exit]:checked').value === 'buyout';
+  const exitBy = buyout ? 'buyout' : 'sale';
+  const terms = { multiple: +$('multiple').value, riskAdj: $('riskAdj').value / 100 };
+
+  let rate;
+  if (mode === 'value') { rate = (val('exitValue') / ahv) ** (1 / years) - 1; $('rate').value = +(rate * 100).toFixed(2); }
+  else { rate = $('rate').value / 100; $('exitValue').value = money(ahv * (1 + rate) ** years); }
+
+  const fee = (pay * $('txnFee').value) / 100;
+  const net = pay - fee - val('broker') - val('legal') - val('appraisal');
+  const run = (y, g) => {
+    const v = ahv * (1 + g) ** y;
+    const x = settle({ ahv, payment: pay, endValue: v, years: y, buyout, ...terms });
+    return { ...x, v, apr: (x.repay / net) ** (1 / y) - 1 };
+  };
+  const r = run(years, rate);
+  const up = r.pct * terms.multiple;
+
+  // Program limits: $50k-$500k, 5%-17.5% of value, 30% equity, mortgage + payment <= 75% of value
+  const lo = Math.max(50000, Math.round(0.05 * ahv));
+  const hi = Math.min(500000, Math.round(0.175 * ahv), Math.round(0.75 * ahv) - debt);
+  const s = $('paySlider');
+  s.min = lo; s.max = Math.max(lo, hi); s.value = pay;
+  $('payHint').textContent = hi >= lo ? `Investment ${pct(r.pct)} of value · available ${money(lo)} – ${money(hi)}` : 'Not enough equity for the minimum payment';
+  const issues = [
+    pay < 50000 && 'Minimum initial payment is $50,000.',
+    pay > 500000 && 'Maximum initial payment is $500,000.',
+    pay < Math.round(0.05 * ahv) && `Minimum is 5% of appraised value (${money(0.05 * ahv)}).`,
+    pay > Math.round(0.175 * ahv) && `Maximum is 17.5% of appraised value (${money(0.175 * ahv)}).`,
+    debt > 0.7 * ahv && 'Requires at least 30% equity (mortgage no more than 70% of value).',
+    debt + pay > Math.round(0.75 * ahv) && `Mortgage plus payment exceeds the 75% cap (${money(0.75 * ahv)}).`,
+  ].filter(Boolean);
+  $('warn').hidden = !issues.length;
+  $('warn').innerHTML = '<b>Outside program limits</b><ul>' + issues.map((t) => `<li>${t}</li>`).join('') + '</ul>';
+
+  const name = $('client').value.trim();
+  $('forLine').textContent = (name ? `Prepared for ${name} · ` : '') + today;
+  $('yearsOut').textContent = years;
+
+  $('k1').textContent = money(net);
+  $('k1s').textContent = `${money(pay)} less ${money(pay - net)} costs`;
+  $('k2').textContent = money(r.repay);
+  $('k2s').textContent = `year ${years}, by ${exitBy}`;
+  $('k3').textContent = money(r.keep);
+  $('k3s').textContent = `of a ${money(r.v)} home`;
+  $('k4').textContent = pct2(r.apr);
+  $('k4s').textContent = `${pct2(r.cost)} before fees`;
+
+  $('story').innerHTML =
+    `You receive <b>${money(pay)}</b> today (<b>${money(net)}</b> after closing costs) with no monthly payments and no interest. ` +
+    `When you sell or buy out, you repay the ${money(pay)} plus <b>${pct(up)}</b> of any rise in value above <b>${money(r.sav)}</b>, or less <b>${pct(r.pct)}</b> of any fall below it. ` +
+    `If your home's value changes <b>${pct(rate)}</b> a year and you exit by ${exitBy} in year <b>${years}</b>, it would be worth about <b>${money(r.v)}</b>: you repay <b>${money(r.repay)}</b> and keep <b>${money(r.keep)}</b>.` +
+    (r.floored ? ` Because this is ${buyout ? 'a buyout' : 'a sale within the first 3 years'}, the investor does not share the loss; the value used is at least the appraised ${money(ahv)}.` : '');
+
+  $('today').innerHTML = dl([
+    ['Appraised home value', money(ahv)],
+    ['Initial payment', money(pay), '', `${pct(r.pct)} of appraised value`],
+    [`Transaction fee (${pct($('txnFee').value / 100)})`, money(-fee)],
+    ['Broker fee', money(-val('broker'))],
+    ['Legal &amp; title', money(-val('legal'))],
+    ['Appraisal', money(-val('appraisal'))],
+    ['Cash to you', money(net), 'tot'],
+    ['Starting agreed value', money(r.sav), 'tot', `appraised value less ${pct(terms.riskAdj)} risk adjustment`],
+    ['Investor share of any gain', pct(up), '', `${terms.multiple}× investment %`],
+    ['Investor share of any loss', pct(r.pct), '', '1× investment %'],
+    ['Mortgage + payment (LTV)', pct((debt + pay) / ahv), '', 'maximum 75%'],
+  ]);
+
+  $('exitTitle').textContent = `At exit: year ${years}, by ${exitBy}`;
+  $('atExit').innerHTML = dl([
+    ['Home value at exit', money(r.v), '', `${pct(rate)} a year`],
+    ['Ending agreed value', money(r.eav), '', r.floored ? 'floored at appraised value' : buyout ? 'by appraisal' : 'sale price'],
+    ['Change vs starting value', money(r.change)],
+    ['Initial payment', money(pay)],
+    [`Investor share of change (${pct(r.sharePct)})`, money(r.share)],
+    ['You repay', money(r.repay), 'tot'],
+    ['You keep', money(r.keep), 'tot', 'before mortgage payoff &amp; selling costs'],
+    ['Investor share of home value', pct(r.repay / r.v)],
+    ['Annual cost on payment', pct2(r.cost)],
+    ['Annual cost incl. fees', pct2(r.apr), '', 'on cash received'],
+  ]);
+
+  const sc = [...document.querySelectorAll('.sr')].map((el) => run(years, el.value / 100));
+  const line = (k, f, c = '') => `<tr class="${c}"><td>${k}</td>${sc.map((x) => `<td>${f(x)}</td>`).join('')}</tr>`;
+  $('scenSub').textContent = `· exit in year ${years} by ${exitBy}`;
+  $('scen').innerHTML = [
+    line('Home value at exit', (x) => money(x.v)),
+    line('Ending agreed value', (x) => money(x.eav) + (x.floored ? '*' : '')),
+    line('Change vs starting value', (x) => money(x.change)),
+    line('Investor share', (x) => pct(x.sharePct)),
+    line('Investor share of change', (x) => money(x.share)),
+    line('You repay', (x) => money(x.repay), 'em'),
+    line('You keep', (x) => money(x.keep), 'em'),
+    line('Annual cost incl. fees', (x) => pct2(x.apr)),
+  ].join('');
+  $('scenFoot').textContent = sc.some((x) => x.floored) ? FLOOR_NOTE : '';
+
+  const ys = Array.from({ length: 10 }, (_, i) => ({ y: i + 1, ...run(i + 1, rate) }));
+  const top = Math.max(...ys.map((x) => x.v));
+  $('yearSub').textContent = `· ${pct(rate)} a year, by ${exitBy}`;
+  $('yearly').innerHTML = ys.map((x) => `<tr class="${x.y === years ? 'sel' : ''}"><td>${x.y}${x.floored ? '*' : ''}</td><td>${money(x.v)}</td><td>${money(x.share)}</td><td>${money(x.repay)}</td><td>${money(x.keep)}</td><td>${pct2(x.apr)}</td>` +
+    `<td class="b"><div class="bar" style="width:${(x.v / top) * 100}%"><i style="width:${clamp(x.keep / x.v)}%"></i><b style="width:${clamp(x.repay / x.v)}%"></b></div></td></tr>`).join('');
+  $('yearFoot').textContent = ys.some((x) => x.floored) ? FLOOR_NOTE : '';
+
+  $('notes').innerHTML = `<b>How it works</b><ul>
+    <li>No monthly payments or interest. Term up to 10 years; exit any time by selling or buying out, with no prepayment penalty.</li>
+    <li>At exit you repay the initial payment plus the investor's share of the change between the starting agreed value (appraised value less ${pct(terms.riskAdj)}) and the ending agreed value (sale price, or an appraisal on a buyout).</li>
+    <li>Gains are shared at ${terms.multiple}× the investment %; losses at 1× the investment %.</li>
+    <li>On a buyout, or a sale within the first 3 years, the ending value is at least the appraised value, so the minimum repayment is ${pct(1 + terms.multiple * terms.riskAdj)} of the initial payment.</li>
+    <li>Eligibility: at least 30% equity; mortgage plus payment within 75% of appraised value; payment of $50,000–$500,000 and 5%–17.5% of appraised value.</li>
+    <li>Not modelled: renovation adjustments (value added by permitted renovations over $25,000 is excluded) and maintenance adjustments (value lost to poor upkeep is added back).</li>
+  </ul>
+  <p>Illustration only, not an offer or commitment. Figures are estimates based on the assumptions shown, and home values can rise or fall. Actual terms, fees and eligibility are set during underwriting and disclosed in writing before signing. "You keep" is before paying off any mortgage and selling costs.</p>`;
+}
+
+const form = document.querySelector('form');
+form.addEventListener('input', (e) => {
+  const id = e.target.id;
+  if (id === 'rate') mode = 'rate';
+  if (id === 'exitValue') mode = 'value';
+  if (id === 'paySlider') {
+    const s = e.target;
+    $('pay').value = money(Math.min(+s.max, Math.max(+s.min, Math.round(s.value / 1000) * 1000)));
+  }
+  render();
+});
+form.addEventListener('change', (e) => {
+  if (e.target.classList.contains('money')) e.target.value = money(val(e.target.id));
+});
+document.querySelectorAll('.sr').forEach((el) => el.addEventListener('input', render));
+document.querySelectorAll('.money').forEach((el) => (el.value = money(val(el.id))));
+render();
+</script>
+</body>
+</html>
